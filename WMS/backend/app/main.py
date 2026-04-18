@@ -4,7 +4,6 @@ from fastapi.security import HTTPBearer
 from fastapi.openapi.utils import get_openapi
 from fastapi.staticfiles import StaticFiles
 import logging
-import os
 from pathlib import Path
 
 from . import models
@@ -33,7 +32,7 @@ security = HTTPBearer()
 origins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    os.getenv("FRONTEND_URL", "https://<my-vercel-domain>"),
+    "https://wms-queo-1m6wiy0mu-lsnehallagad-gmailcoms-projects.vercel.app",
 ]
 
 # 🔴 IMPORTANT: CORS MUST BE BEFORE ROUTERS
