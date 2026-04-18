@@ -9,3 +9,4 @@ python-multipart
 passlib[bcrypt]
 pydantic
 psycopg2
+python-jose[cryptography]
