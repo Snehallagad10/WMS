@@ -166,8 +166,13 @@ def create_warehouse(
 # ================= LIST WAREHOUSES =================
 @router.get("/")
 def list_warehouses(db: Session = Depends(get_db)):
-    warehouses = db.query(Warehouse).all()
-    return [serialize_warehouse(w) for w in warehouses]
+    try:
+        print("WAREHOUSE HIT")
+        data = db.query(Warehouse).all()
+        return [serialize_warehouse(w) for w in data]
+    except Exception as e:
+        print("WAREHOUSE ERROR:", str(e))
+        return []
 
 
 # ================= UPDATE WAREHOUSE =================
