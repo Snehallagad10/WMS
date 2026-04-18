@@ -22,6 +22,10 @@
 
 // export default axiosClient;
 
-import apiClient from "../config/api";
+import axios from "axios";
 
-export default apiClient;
+const axiosClient = axios.create({
+  baseURL: "https://wms-469e.onrender.com",
+});
+
+export default axiosClient;

@@ -19,35 +19,41 @@ export default function AdminLogin() {
   // =============================
   // HANDLE LOGIN (REGISTER FIRST)
   // =============================
-  
 
-const handleLogin = async () => {
+
+  const handleLogin = async () => {
   try {
     setLoading(true);
 
     const res = await axiosClient.post("/auth/login", {
-  username,
-  password,
-});
+      username,
+      password,
+    });
 
-console.log(res.data);
+    console.log(res.data);
 
-// 🔥 THIS WAS MISSING
-localStorage.setItem("access_token", res.data.access_token);
+    const token = res.data.access_token || res.data.token;
+    const role = res.data.roles?.[0] || "wms_admin";
 
-// optional
-localStorage.setItem("role", res.data.roles[0]);
+    // 🔥 IMPORTANT SAFETY CHECK
+    if (!token) {
+      alert("Login Failed");
+      return;
+    }
 
-    const role = res.data.roles[0];
+    localStorage.setItem("access_token", token);
+    localStorage.setItem("role", role);
 
     if (role === "wms_admin") {
-      navigate("/dashboard");
+      alert("Login success");
+window.location.href = "/dashboard";
     } else if (role === "supervisor") {
       navigate("/supervisor-dashboard");
     }
 
   } catch (err) {
-    alert(err.response?.data?.detail || "Login Failed");
+    console.error(err);
+    alert("Login Failed");
   } finally {
     setLoading(false);
   }
@@ -141,25 +147,6 @@ localStorage.setItem("role", res.data.roles[0]);
               Sign up
             </span>
           </p>
-
-          {/* Divider */}
-          {/* <div className="flex items-center my-8">
-            <div className="flex-1 h-[1px] bg-gray-300"></div>
-            <span className="px-3 text-sm text-gray-500">
-              or Sign in with
-            </span>
-            <div className="flex-1 h-[1px] bg-gray-300"></div>
-          </div> */}
-
-          {/* Social Buttons */}
-          {/* <div className="flex gap-4">
-            <button className="flex-1 py-3 rounded-xl border border-gray-300 bg-white shadow-sm hover:bg-gray-50">
-              GitHub
-            </button>
-            <button className="flex-1 py-3 rounded-xl border border-gray-300 bg-white shadow-sm hover:bg-gray-50">
-              Google
-            </button>
-          </div> */}
         </div>
       </div>
     </div>
