@@ -1,0 +1,17 @@
+.vscode
+
+# Python
+__pycache__/
+*.pyc
+.env
+.venv
+backend/venv
+
+# Node
+node_modules/
+dist/
+npm-debug.log
+yarn-error.log
+
+# Misc
+.DS_Store

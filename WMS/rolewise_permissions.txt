@@ -1,0 +1,21 @@
+role_code	    permission_code
+
+QC_EXEC	        gate.view
+QC_EXEC	        gate.update
+
+SECURITY	    gate.update
+SECURITY    	gate.view
+SECURITY	    gate.create
+
+WAREHOUSE_EXEC	gate.view
+WAREHOUSE_EXEC	gate.update
+
+WMS_ADMIN	    user.manage
+WMS_ADMIN	    gate.view
+WMS_ADMIN	    role.manage
+WMS_ADMIN	    gate.create
+WMS_ADMIN	    gate.update
+WMS_ADMIN	    gate.approve
+WMS_ADMIN	    warehouse.view
+WMS_ADMIN	    warehouse.manage
+WMS_ADMIN	    user.view

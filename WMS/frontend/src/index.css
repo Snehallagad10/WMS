@@ -1,0 +1,23 @@
+/* Global Reset */
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: Inter, Arial, sans-serif;
+    background: #f5f7fb;
+}
+
+h1{
+    font-size: 28px;
+    font-weight: 700;
+    color: #111827;
+}
+
+p{
+    font-size: 14px;
+    color: #6b7280;
+}

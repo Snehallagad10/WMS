@@ -1,0 +1,17 @@
+Protection Order
+
+Warehouse:
+PUT /warehouses → require warehouse.manage
+GET /warehouses → require warehouse.view
+
+Gates:
+POST /gates → require gate.create
+GET /gates → require gate.view
+
+Gate Entries:
+POST /gate-entries → require gate.create
+PUT /gate-entries/{id}/exit → require gate.update
+POST materials → require gate.update
+POST inspection → require gate.update
+POST documents → require gate.update
+POST photos → require gate.update

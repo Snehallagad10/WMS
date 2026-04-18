@@ -1,0 +1,180 @@
+/* MAIN PAGE */
+.warehouse-page {
+  padding: 28px;
+  background: #f5f7fb;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+}
+
+/* TITLE */
+.warehouse-title {
+  font-size: 48px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 6px;
+}
+
+.warehouse-subtitle {
+  font-size: 20px;
+  color: #6b7280;
+  margin-bottom: 22px;
+}
+
+/* TOOLBAR */
+.warehouse-toolbar {
+  width: 100%;
+  margin-bottom: 22px;
+}
+
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: nowrap;   /* IMPORTANT */
+}
+
+/* SEARCH */
+.toolbar-left .toolbar-input:first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+/* INPUTS */
+.toolbar-input,
+.toolbar-pill {
+  height: 46px;
+  padding: 0 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  font-size: 15px;
+  background: white;
+  outline: none;
+}
+
+/* STATUS */
+select.toolbar-input {
+  width: 180px;
+}
+
+/* DATE */
+.toolbar-pill {
+  width: 180px;
+}
+
+/* BUTTON */
+.add-btn {
+  height: 46px;
+  padding: 0 22px;
+  border: none;
+  border-radius: 12px;
+  background: #4f46e5;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+/* TABLE CARD */
+.warehouse-card {
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+/* TABLE */
+.warehouse-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: "Inter", sans-serif;
+}
+
+/* HEADER */
+.warehouse-table th {
+  padding: 16px 18px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+  border-bottom: 1px solid #e5e7eb;
+  white-space: nowrap;
+}
+
+/* ROW */
+.warehouse-table td {
+  padding: 14px 18px;   /* reduced */
+  font-size: 13px;      /* smaller font */
+  font-weight: 500;
+  color: #1f2937;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+  line-height: 1.2;
+}
+
+/* ROW HOVER */
+.warehouse-table tbody tr:hover {
+  background: #fafafa;
+}
+
+/* STATUS BADGES */
+.badge-active,
+.badge-full,
+.badge-inactive {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;      /* smaller */
+  border-radius: 999px;
+  font-size: 11px;        /* smaller */
+  font-weight: 600;
+  min-width: 72px;
+}
+
+.badge-active {
+  background: #ecfdf3;
+  color: #22c55e;
+}
+
+.badge-full {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.badge-inactive {
+  background: #fef2f2;
+  color: #ef4444;
+}
+.actions-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.edit-icon,
+.delete-icon {
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+/* edit */
+.edit-icon {
+  color: #374151;
+}
+
+/* delete */
+.delete-icon {
+  color: #ef4444;
+}
+
+.edit-icon:hover,
+.delete-icon:hover {
+  transform: scale(1.08);
+}
+
+.action-divider {
+  width: 1px;
+  height: 16px;
+  background: #d1d5db;
+}

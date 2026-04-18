@@ -1,0 +1,7 @@
+| Role           | gate.view | gate.create | gate.update | gate.approve | warehouse.manage | user.manage | role.manage |
+| -------------- | --------- | ----------- | ----------- | ------------ | ---------------- | ----------- | ----------- |
+| WMS_ADMIN      | ✔         | ✔          | ✔           | ✔           | ✔                | ✔           | ✔          |
+| SECURITY       | ✔         | ✔          | ✔           | ❌          | ❌               | ❌          | ❌         |
+| WAREHOUSE_EXEC | ✔         | ❌         | ✔           | ❌          | ❌               | ❌          | ❌         |
+| QC_EXEC        | ✔         | ❌         | ✔           | ❌          | ❌               | ❌          | ❌         |
+| SUPERVISOR     | ✔         | ❌         | ❌          | ✔           | ❌               | ❌          | ❌         |

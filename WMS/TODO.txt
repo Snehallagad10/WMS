@@ -1,0 +1,36 @@
+Permission Layer -> Done
+JWT Authentication -> Done
+
+Audit Log
+Request/Response Models
+
+New Role: System Admin 
+Des: Admin of whole App, Auth, user creation, warehouse creation and permissions, etc.
+
+# New TODO: (Priority: High)
+
+1. Create New Page for Role and Permissions customisation -> Done
+2. Change UUID format to custom ID format (gate/warehouse/etc._id_Date[dd/mm/yyyy]Time_SerialNo(Random or With some meaning[need to decide])) -> Done
+3. Create a proper SQL Queries to Sync Databases for Devs. -> Done
+
+# TODO:
+1. Add edit button to warehouse, users, roles and permissions and gate entries.
+2. New DB queries
+    a. Dock Creation -> Done
+    b. Dock Allocation -> Done
+    c. Unloading -> Done
+3. Documentation, JSON for every page's API call. -> Done
+
+New TODO: (Backend)
+
+1. SKU Level Master Data
+2. Inbound Item Indentification
+3. Stores Product and Label Photos
+4. Batch and Expiry Capture
+
+New Phase TODO: QC (Backend)
+
+1. Store QC decicsion per item/batch
+2. GRN
+3. Line-level GRN details
+4. Inventory Update (Post GRN)
