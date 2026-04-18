@@ -29,17 +29,18 @@ app = FastAPI()
 logger = logging.getLogger(__name__)
 
 security = HTTPBearer()
+
 origins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "https://wms-queo-1m6wiy0mu-lsnehallagad-gmailcoms-projects.vercel.app",
 ]
 
-# 🔴 IMPORTANT: CORS MUST BE BEFORE ROUTERS
+# 🔥 FIX: allow ALL vercel + fallback
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
-    allow_origin_regex=r"https://.*\.vercel\.app",
+    allow_origin_regex=r"https://.*\.vercel\.app",  # already good
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -55,7 +56,9 @@ except OSError:
     logger.exception("Failed to create uploads directory at startup import time")
 
 # Static Files (Image Access)
-app.mount("/uploads", StaticFiles(directory=str(UPLOADS_DIR), check_dir=False), name="uploads")
+app.mount(
+    "/uploads", StaticFiles(directory=str(UPLOADS_DIR), check_dir=False), name="uploads"
+)
 
 # ROUTERS
 app.include_router(auth_router)
@@ -87,7 +90,9 @@ def startup() -> None:
             return
 
         db_ready = test_database_connection(engine)
-        logger.info("Database connection status: %s", "connected" if db_ready else "failed")
+        logger.info(
+            "Database connection status: %s", "connected" if db_ready else "failed"
+        )
 
         if not db_ready:
             logger.warning(
@@ -105,6 +110,7 @@ def startup() -> None:
         logger.exception("Unhandled exception during FastAPI startup")
     finally:
         logger.info("FastAPI application startup finished")
+
 
 @app.get("/")
 def root():
@@ -128,11 +134,7 @@ def custom_openapi():
     )
 
     openapi_schema["components"]["securitySchemes"] = {
-        "BearerAuth": {
-            "type": "http",
-            "scheme": "bearer",
-            "bearerFormat": "JWT"
-        }
+        "BearerAuth": {"type": "http", "scheme": "bearer", "bearerFormat": "JWT"}
     }
 
     openapi_schema["security"] = [{"BearerAuth": []}]
