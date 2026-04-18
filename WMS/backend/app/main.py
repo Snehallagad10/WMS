@@ -3,10 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import HTTPBearer
 from fastapi.openapi.utils import get_openapi
 from fastapi.staticfiles import StaticFiles
-import os
+import logging
+from pathlib import Path
 
-from .db import engine
-from .models import core
+from . import models
+from .db import Base, engine, test_database_connection
 
 # ROUTERS
 from .routes.auth import router as auth_router
@@ -19,10 +20,13 @@ from .routes.permissions import router as permissions_router
 from .routes.docks import router as docks_router
 from .routes.dock_allocation import router as dock_alloc_router
 
-# Create tables
-core.Base.metadata.create_all(bind=engine)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s [%(name)s] %(message)s",
+)
 
 app = FastAPI()
+logger = logging.getLogger(__name__)
 
 security = HTTPBearer()
 
@@ -40,10 +44,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Create folders
-os.makedirs("uploads/uploading", exist_ok=True)
+BASE_DIR = Path(__file__).resolve().parents[2]
+UPLOADS_DIR = BASE_DIR / "uploads"
+UPLOADS_UPLOADING_DIR = UPLOADS_DIR / "uploading"
+
+try:
+    UPLOADS_UPLOADING_DIR.mkdir(parents=True, exist_ok=True)
+except OSError:
+    logger.exception("Failed to create uploads directory at startup import time")
+
 # Static Files (Image Access)
-app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
+app.mount("/uploads", StaticFiles(directory=str(UPLOADS_DIR), check_dir=False), name="uploads")
 
 # ROUTERS
 app.include_router(auth_router)
@@ -55,6 +66,44 @@ app.include_router(roles_router)
 app.include_router(permissions_router)
 app.include_router(docks_router)
 app.include_router(dock_alloc_router)
+
+
+@app.on_event("startup")
+def startup() -> None:
+    logger.info("FastAPI application startup began")
+
+    try:
+        try:
+            UPLOADS_UPLOADING_DIR.mkdir(parents=True, exist_ok=True)
+            logger.info("Uploads directory is ready at %s", UPLOADS_UPLOADING_DIR)
+        except OSError:
+            logger.exception("Failed to create uploads directory during startup")
+
+        if engine is None:
+            logger.warning(
+                "Database engine is unavailable. App will continue without database initialization"
+            )
+            return
+
+        db_ready = test_database_connection(engine)
+        logger.info("Database connection status: %s", "connected" if db_ready else "failed")
+
+        if not db_ready:
+            logger.warning(
+                "Skipping metadata initialization because database connection test failed"
+            )
+            return
+
+        try:
+            logger.info("Initializing database tables")
+            Base.metadata.create_all(bind=engine)
+            logger.info("Database initialization completed")
+        except Exception:
+            logger.exception("Database initialization failed during startup")
+    except Exception:
+        logger.exception("Unhandled exception during FastAPI startup")
+    finally:
+        logger.info("FastAPI application startup finished")
 
 @app.get("/")
 def root():

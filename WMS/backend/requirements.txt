@@ -5,6 +5,7 @@ httpx
 sqlalchemy
 databases
 python-dotenv
+python-multipart
 passlib[bcrypt]
 pydantic
 psycopg2
