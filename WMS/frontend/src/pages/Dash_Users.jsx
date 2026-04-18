@@ -15,9 +15,6 @@ const createdUser = queryParams.get("created");
 
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState("");
-
-  const API_BASE = "http://localhost:8000";
-
   const getAuthHeader = () => {
     const token = localStorage.getItem("access_token");
     return {
@@ -34,7 +31,7 @@ const createdUser = queryParams.get("created");
 
   const loadUsers = async () => {
     try {
-      const res = await API.get(`${API_BASE}/users/`, getAuthHeader());
+      const res = await API.get("/users/", getAuthHeader());
       setUsers(res.data || []);
     } catch (err) {
       console.error(err);
@@ -43,7 +40,7 @@ const createdUser = queryParams.get("created");
 
   const loadRoles = async () => {
     try {
-      const res = await API.get(`${API_BASE}/users/roles`, getAuthHeader());
+      const res = await API.get("/users/roles", getAuthHeader());
       setRoles(res.data || []);
     } catch (err) {
       console.error(err);
@@ -73,7 +70,7 @@ const deleteUser = async (id) => {
   if (!window.confirm("Delete this user?")) return;
 
   try {
-    await API.delete(`${API_BASE}/users/${id}`, getAuthHeader());
+    await API.delete(`/users/${id}`, getAuthHeader());
     loadUsers();
   } catch (err) {
     alert("Delete failed");

@@ -1,14 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import API from "../api";
 
 export default function UserManagementPage() {
 
   const location = useLocation(); 
-
-  const API_BASE = "http://localhost:8000";
-
   const roleRef = useRef(null);
   const warehouseRef = useRef(null);
   
@@ -50,7 +47,7 @@ useEffect(() => {
 
   const fetchUserById = async () => {
   try {
-    const res = await axios.get(`${API_BASE}/users/`, getAuthHeader());
+    const res = await API.get("/users/", getAuthHeader());
 
     const found = res.data.find(u => u.user_id === id);
 
@@ -128,7 +125,7 @@ setSelectedWarehouses(found.warehouse_ids || []);
 
   const fetchRoles = async ()=>{
     try{
-      const res = await axios.get(`${API_BASE}/users/roles`,getAuthHeader());
+      const res = await API.get("/users/roles",getAuthHeader());
       setRoles(Array.isArray(res.data)?res.data:[]);
     }catch{
       setRoles([]);
@@ -137,7 +134,7 @@ setSelectedWarehouses(found.warehouse_ids || []);
 
   const fetchWarehouses = async ()=>{
     try{
-      const res = await axios.get(`${API_BASE}/warehouses/`,getAuthHeader());
+      const res = await API.get("/warehouses/",getAuthHeader());
       setWarehouses(Array.isArray(res.data)?res.data:[]);
     }catch{
       setWarehouses([]);
@@ -210,7 +207,7 @@ setSelectedWarehouses(found.warehouse_ids || []);
     };
 
     try{
-      const res = await axios.post(`${API_BASE}/users/`,payload,getAuthHeader());
+      const res = await API.post("/users/",payload,getAuthHeader());
 
       alert(`User created\nUsername:${res.data.username}`);
       window.location.href = "/users?refresh=" + Date.now();
@@ -251,8 +248,8 @@ const handleUpdate = async () => {
       }))
     };
 
-    await axios.put(
-      `${API_BASE}/users/${id}`,
+    await API.put(
+      `/users/${id}`,
       payload,
       getAuthHeader()
     );

@@ -296,11 +296,9 @@
 // ============================================================
 
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import "./G-details.css";
 import { useParams, useNavigate } from "react-router-dom";
-
-const API = "http://localhost:8000";
+import API from "../../api";
 
 export default function GateEntryDetails() {
   const { id } = useParams();
@@ -321,7 +319,7 @@ export default function GateEntryDetails() {
     setLoading(true);
     setError(null);
     try {
-      const res = await axios.get(`${API}/gate-entries/${id}`, {
+      const res = await API.get(`/gate-entries/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setEntry(res.data);
